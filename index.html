@@ -1,27 +1,28 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset='utf-8' />
-    <title>StreeByStreets</title>
-    <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v1.12.0/mapbox-gl.css' rel='stylesheet' />
-      <script src='https://npmcdn.com/csv2geojson@latest/csv2geojson.js'></script>
-      <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-      }
 
-      #map {
-        position: absolute;
-        top: 0;
-        bottom: 0;
-        width: 100%;
-      }
-      
+<head>
+  <meta charset='utf-8' />
+  <title></title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+  <script src='https://npmcdn.com/csv2geojson@latest/csv2geojson.js'></script>
+  <script src='https://npmcdn.com/@turf/turf/turf.min.js'></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
+
+    #map {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+    }
+
     /* Popup styling */
 
     .mapboxgl-popup {
@@ -71,15 +72,15 @@
     .mapboxgl-popup-anchor-top>.mapboxgl-popup-tip {
       border-bottom-color: rgb(61, 59, 59);
     }
-    </style>
-    
+  </style>
+</head>
 
-  </head>
-  <body>
-    <div id='map'></div>
-    <script>
+<body>
 
-      var transformRequest = (url, resourceType) => {
+  <div id='map'></div>
+  <script>
+
+    var transformRequest = (url, resourceType) => {
       var isMapboxRequest =
         url.slice(8, 22) === "api.mapbox.com" ||
         url.slice(10, 26) === "tiles.mapbox.com";
@@ -89,17 +90,17 @@
           : url
       };
     };
-      
-      mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleGF3bCIsImEiOiJja2ZzaXh2MHAwNGlpMnhxZnB2c3Nyemx2In0.Aptu3Nx0vCAkWqdu8I3O0g'; // replace this with your access token
+    //YOUR TURN: add your Mapbox token 
+    mapboxgl.accessToken = 'pk.eyJ1IjoiYWxleGF3bCIsImEiOiJja2ZzaXh2MHAwNGlpMnhxZnB2c3Nyemx2In0.Aptu3Nx0vCAkWqdu8I3O0g'; //Mapbox token 
     var map = new mapboxgl.Map({
-      container: 'map',
-      style: 'mapbox://styles/alexawl/ckfspl7ye1qba19p78y5ljo53', // replace this with your style URL
-      center: [-80.164534, 26.0303001],  //Starting Position
-      zoom: 10.5  // Starting zoom
+      container: 'map', // container id
+      style: 'mapbox://styles/alexawl/ckfspl7ye1qba19p78y5ljo53', //stylesheet location
+      center: [-80.164534, 26.0303001], // starting position
+      zoom: 10,// starting zoom
       transformRequest: transformRequest
     });
-      
-      $(document).ready(function () {
+
+    $(document).ready(function () {
       $.ajax({
         type: "GET",
         //YOUR TURN: Replace with csv export link
@@ -109,7 +110,8 @@
       });
 
 
-        function makeGeoJSON(csvData) {
+
+      function makeGeoJSON(csvData) {
         csv2geojson.csv2geojson(csvData, {
           latfield: 'Latitude',
           lonfield: 'Longitude',
@@ -130,11 +132,9 @@
                 'circle-color': "purple"
               }
             });
-      
-   
-  
 
-      // When a click event occurs on a feature in the csvData layer, open a popup at the
+
+            // When a click event occurs on a feature in the csvData layer, open a popup at the
             // location of the feature, with description HTML from its properties.
             map.on('click', 'csvData', function (e) {
               var coordinates = e.features[0].geometry.coordinates.slice();
@@ -177,7 +177,12 @@
         });
       };
     });
-      
-    </script>
-  </body>
+
+
+
+
+  </script>
+
+</body>
+
 </html>
