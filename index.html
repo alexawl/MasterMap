@@ -21,13 +21,7 @@
         bottom: 0;
         width: 100%;
       }
-      .marker {
-  background-image: url('https://cdn.glitch.com/f7a658f8-4d83-4326-bc8e-8f57c800d091%2Ficon.png?1601776881744');
-  background-size: cover;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  cursor: pointer;
+      
     /* Popup styling */
 
     .mapboxgl-popup {
@@ -102,6 +96,7 @@
       style: 'mapbox://styles/alexawl/ckfspl7ye1qba19p78y5ljo53', // replace this with your style URL
       center: [-80.164534, 26.0303001],  //Starting Position
       zoom: 10.5  // Starting zoom
+      transformRequest: transformRequest
     });
       
       $(document).ready(function () {
@@ -112,6 +107,8 @@
         dataType: "text",
         success: function (csvData) { makeGeoJSON(csvData); }
       });
+
+
         function makeGeoJSON(csvData) {
         csv2geojson.csv2geojson(csvData, {
           latfield: 'Latitude',
@@ -134,21 +131,9 @@
               }
             });
       
-   var geojson = {
-  type: 'FeatureCollection',
-  features: [{
-    type: 'Feature',
-    geometry: {
-      type: 'Point',
-      coordinates: [-80.164534, 26.0303001]
-    },
-    properties: {
-      title: 'Mapbox',
-      description: 'City of Hollywood, Fl'
-    }
-  },
-]
-};
+   
+  
+
       // When a click event occurs on a feature in the csvData layer, open a popup at the
             // location of the feature, with description HTML from its properties.
             map.on('click', 'csvData', function (e) {
